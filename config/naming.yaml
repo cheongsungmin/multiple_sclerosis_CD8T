@@ -1,0 +1,76 @@
+# MS 재현 프로젝트 — subset naming 정본
+# source of truth = 26JAN annotated 객체. 로드해서 사용, 하드코딩 금지.
+# 옛 이탈 이름은 aliases 로만 인식하고 canonical 로 출력한다.
+# 추출 근거: DATA/26JAN/260122_anno1.h5ad(obs['anno1']),
+#            DATA/26JAN/260122_anno2_*.h5ad(obs['anno2'])
+
+level1:            # anno1 (12 lineages) — 저장 순서 유지
+  - T_CD4
+  - T_CD4_Treg
+  - T_CD8
+  - T_IFN
+  - T_MAIT
+  - T_Prolif
+  - T_gd
+  - NK
+  - B
+  - M_Mono
+  - M_cDC
+  - M_pDC
+
+level2:
+  T_CD8:           # 260122_anno2_T_CD8.h5ad
+    - T_CD8_Naive/CM
+    - T_CD8_EM_GZMK(lo)
+    - T_CD8_EM_GZMK(hi)
+    - T_CD8_EM_ZNF683(hi)
+    - T_CD8_EM_KIR
+    - T_CD8_IFN
+    # 주: 이 객체엔 T_CD4_CTL 도 섞여 저장돼 있으나 CD4 계열로 취급(T_CD4 하위)
+  T_CD4:           # 260122_anno2_T_CD4.h5ad
+    - T_CD4_SOX4
+    - T_CD4_Naive/CM
+    - T_CD4_CXCR5
+    - T_CD4_Th1
+    - T_CD4_Th2
+    - T_CD4_Th17
+    - T_CD4_Treg
+    - T_CD4_CTL
+    - T_CD4_IFN
+  B:               # 260122_anno2_B.h5ad
+    - B_Naive_SOX4
+    - B_Naive
+    - B_Activated
+    - B_Memory_Unswitched
+    - B_Memory_Switched
+    - B_Memory_Atypical
+    - B_Plasma
+    - B_Plasmablast
+    - B_IFN
+  NK:              # 260122_anno2_NK.h5ad
+    - NK_CD56(hi)
+    - NK_CD56(lo)
+    - NK_IFN
+    - NK_Prolif
+  Myeloid:         # 260122_anno2_myeloid.h5ad
+    - M_Mono_CD14
+    - M_Mono_CD16
+    - M_Mono_C1QA
+    - M_Mono_IFN
+    - M_cDC1
+    - M_cDC2
+    - M_pDC
+
+# 옛 그림/노트북의 이탈 이름 -> 정본 (재현 시 자동 교정)
+aliases:
+  T_CD8_EM_TYROBP: T_CD8_EM_KIR        # Fig1j, Supple4, Fig6f 모식도
+  T_CD8_EM_ZNF683: T_CD8_EM_ZNF683(hi)  # (hi) 누락 (Fig1j, Supple4)
+  M_Mono_CD16_C1QA: M_Mono_C1QA         # Supple3D
+  T_CD4_Naive/CM_CXCR5: T_CD4_CXCR5     # Supple3B
+  B_Naive_Activated: B_Activated         # Supple3C
+
+# 문서화 노트:
+# - KIR subset 은 KIR3DL2 / TYROBP(DAP12) 를 함께 발현. 데이터 저장명이 KIR 이므로
+#   정본은 KIR. 요약 모식도의 "TYROBPhi CD8" 표기도 KIR 로 통일한다.
+# - 색상: <MS_SRC>/01_Figures_pre/colors_*.pkl (anno1, anno2_B/myeloid/NK/T_CD4/T_CD8/total)
+#   재현 시 이 palette 를 재사용하여 원본과 색을 맞춘다(READ-ONLY 복사해서 로드).

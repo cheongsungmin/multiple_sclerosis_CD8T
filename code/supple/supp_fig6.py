@@ -1,18 +1,21 @@
 """Supplementary Figure 6 (supports Main Figure 5) — one supple per main figure.
 
-Main Fig. 5 (원본) 은 이미 a–j 로 조밀하고, monocyte UMAP·마커는 Fig. 1h·5c 및
-전용 마커 그림(Supplementary Fig. 2)과 겹친다. 따라서 이 supple 은 메인과 겹치지 않는
-단 하나의 근거만 담는다: **U-ISGF3 / P-ISGF3 module score 를 4 군(R/NR × Pre/Post)으로
-정량화**한다. 메인 Fig. 5i 는 pre-only 점수, Fig. 5j 는 유전자 dotplot 이므로, 여기서만
-"U-ISGF3 가 치료 후에도 non-responder 에서 높게 유지된다" 를 점수로 보인다.
+Main Fig. 5 (original) is already dense with panels a–j, and the monocyte UMAP and
+markers overlap with Fig. 1h/5c and the dedicated marker figure (Supplementary Fig. 2).
+This supplement therefore contains the single piece of evidence not shown in the main
+figure: **quantification of the U-ISGF3 / P-ISGF3 module score across the 4 groups
+(R/NR × Pre/Post)**. Main Fig. 5i shows pre-only scores and Fig. 5j is a gene dotplot,
+so only here do we show, as a score, that "U-ISGF3 stays high in non-responders even
+after treatment".
 
   a  U-ISGF3 monocyte module score, R/NR × Pre/Post (paired samples)
   b  P-ISGF3 monocyte module score, R/NR × Pre/Post (paired samples)
 
-module score·gene set 은 원본과 동일 정의(03_Figures_NR/260201_2154_IFN.ipynb),
-재계산은 self-contained data/objects 에서 결정론적.
-출력: figures/supplementary/Supplementary_Fig6.pdf (단일 벡터, dpi300, 일러 편집)
-      data/results/supp_fig6_isgf3_scores.csv (per-sample module score, source data)
+The module score and gene set use the same definition as the original
+(03_Figures_NR/260201_2154_IFN.ipynb); recomputation is deterministic from the
+self-contained data/objects.
+Output: figures/supplementary/Supplementary_Fig6.pdf (single vector, dpi300, Illustrator-editable)
+        data/results/supp_fig6_isgf3_scores.csv (per-sample module score, source data)
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -28,17 +31,17 @@ import scanpy as sc
 import matplotlib.pyplot as plt
 from scipy.stats import mannwhitneyu
 
-from common import io, style, naming, palette
+from common import io, style, palette
 style.apply()
 BASE, TICK, PLET = style.BASE, style.TICK, style.PANEL_LETTER
 OBJ = os.path.join(MS_ROOT, "data/objects")
 OUT = os.path.join(MS_ROOT, "figures/supplementary")
 RES = os.path.join(MS_ROOT, "data/results")
-GCOL = palette.GROUP   # Responder/Nonresponder × Before/After 정본 색
+GCOL = palette.GROUP   # canonical Responder/Nonresponder × Before/After colors
 
 # ------------------------------------------------------------------ gene sets
-# U-ISGF3 / P-ISGF3 = 원본 정의 그대로(03_Figures_NR/260201_2154_IFN.ipynb, cells 19–20).
-# legacy symbol 만 현행으로 매핑(그림 j 와 일치): G1P2->ISG15, BIRC4BP->XAF1.
+# U-ISGF3 / P-ISGF3 = original definition as-is (03_Figures_NR/260201_2154_IFN.ipynb, cells 19–20).
+# only legacy symbols are remapped to current ones (matching panel j): G1P2->ISG15, BIRC4BP->XAF1.
 _ALIAS = {"G1P2": "ISG15", "BIRC4BP": "XAF1"}
 _mp = lambda g: _ALIAS.get(g, g)
 PISGF3_RAW = [
@@ -57,14 +60,14 @@ UISGF3_RAW = sorted(set([
 ]))
 
 # ------------------------------------------------------------------ load object
-ad = sc.read_h5ad(f"{OBJ}/MS_scRNA_anno2_myeloid.h5ad")   # X = log-norm, meta 내장
+ad = sc.read_h5ad(f"{OBJ}/MS_scRNA_anno2_myeloid.h5ad")   # X = log-norm, metadata embedded
 ad.obs["anno2"] = ad.obs["anno2"].astype(str)
 UISGF3 = sorted({_mp(g) for g in UISGF3_RAW if _mp(g) in ad.var_names})
 PISGF3 = sorted({_mp(g) for g in PISGF3_RAW if _mp(g) in ad.var_names})
 print(f"U-ISGF3 genes scored: {len(UISGF3)} | P-ISGF3 genes scored: {len(PISGF3)}")
 
-# ------------------------------------------------------------------ module scores (원본 방식)
-# 원본: 전체 myeloid 를 scale(max_value=10) 후 score_genes, 그 뒤 M_Mono 세포에서 per-sample mean.
+# ------------------------------------------------------------------ module scores (original method)
+# original: scale all myeloid cells (max_value=10) then score_genes, then per-sample mean over M_Mono cells.
 scaled = ad.copy()
 sc.pp.scale(scaled, max_value=10)
 sc.tl.score_genes(scaled, UISGF3, score_name="UISG")

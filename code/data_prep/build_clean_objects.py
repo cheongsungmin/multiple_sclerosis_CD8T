@@ -5,10 +5,10 @@ data/objects/ that needs NO manual relabeling/recoloring downstream:
   - X            : log-normalized expression (as-is, 26JAN fixed point)
   - layers['counts'] : raw UMI counts (injected from the count object, same 36,601 genes)
   - obs          : + clinical metadata (Group1, NEDA3_1yr, Timepoint, Paired, DMT...) via SampleID
-  - anno* cats   : canonical order (config/naming.yaml)
+  - anno* cats   : canonical order (from the naming module)
   - uns[*_colors]: curated palette (colors_*.pkl), 6-digit hex, aligned to category order
 Originals in <MS_SRC> are READ-ONLY (R1); we only write into <MS_ROOT>/data (R5).
-출력: data/objects/MS_scRNA_{anno1_total, anno2_<lineage>}.h5ad
+Output: data/objects/MS_scRNA_{anno1_total, anno2_<lineage>}.h5ad
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))

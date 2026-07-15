@@ -4,10 +4,10 @@ Combines into a single vector, Illustrator-editable multi-panel PDF:
   a-d  QC (genes/cell, UMIs/cell, %mito, per-sample cell yield)
   e-f  batch/integration evidence (UMAP by sample, per-lineage sample entropy)
   g    baseline R-vs-NR differences robust to confounders (adjusted forest)
-패널 순서 = 본문 등장 순서(QC → batch → confounder).
+Panel order = order of appearance in the text (QC → batch → confounder).
 Canonical lineage/subset markers live in the dedicated marker figure
-(Supplementary Fig. 2); baseline 임상특성표는 Supplementary Data 2(원본).
-출력: figures/supplementary/Supplementary_Fig1.pdf
+(Supplementary Fig. 2); the baseline clinical characteristics table is Supplementary Data 2 (original).
+Output: figures/supplementary/Supplementary_Fig1.pdf
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +29,7 @@ from scipy.sparse import issparse
 
 from common import io, style, naming, palette
 style.apply()
-BASE, TICK, PLET = style.BASE, style.TICK, style.PANEL_LETTER   # 6 / 5 / 12(bold)
+BASE, TICK, PLET = style.BASE, style.TICK, style.PANEL_LETTER   # 6 / 5 / 12 (bold)
 OBJ = os.path.join(MS_ROOT, "data/objects")
 OUT = os.path.join(MS_ROOT, "figures/supplementary")
 
@@ -80,7 +80,7 @@ sns.despine(ax=axd)
 # e-f batch (Harmony) integration evidence: lineages are not sample/batch artifacts
 um = a1.obsm["X_umap"]; sids = a1.obs["SampleID"].astype(str)
 uniq = sorted(sids.unique())
-# 41개 구분되는 색(흰색 회피): tab20+tab20b+tab20c(=60) 앞부분 사용
+# 41 distinct colors (avoiding white): use the front of tab20+tab20b+tab20c (=60)
 disc = list(plt.cm.tab20.colors) + list(plt.cm.tab20b.colors) + list(plt.cm.tab20c.colors)
 scol = {s: disc[i] for i, s in enumerate(uniq)}
 axf = fig.add_subplot(gs[2, 0:2])
@@ -144,7 +144,7 @@ axh.set_xlabel("Adjusted Responder effect (β, 95% CI;\n+Age +Sex +DMT +disease 
 axh.set_title("Baseline R-vs-NR robust to confounders", fontsize=BASE)
 sns.despine(ax=axh)
 
-# panel labels (볼드 12)
+# panel labels (bold 12)
 for ax, lab in [(axa, "a"), (axb, "b"), (axc, "c"), (axd, "d"),
                 (axf, "e"), (axg, "f"), (axh, "g")]:
     ax.text(-0.06, 1.04, lab, transform=ax.transAxes, fontsize=PLET, fontweight="bold",

@@ -1,26 +1,26 @@
 """Publication plotting style (matplotlib/seaborn). Import and call apply().
 
-사용자 원본 세팅 반영: 모든 글씨 검은색, pdf.fonttype=42(일러 편집).
-크기 체계(A4 기준): 기본 6 / 축(tick) 5 / 패널 알파벳 볼드 12.
-패널 문자 크기는 PANEL_LETTER 로 노출.
+Reflects the original user settings: all text black, pdf.fonttype=42 (Illustrator-editable).
+Size scheme (A4 basis): base 6 / tick 5 / panel letter bold 12.
+The panel letter size is exposed as PANEL_LETTER.
 """
 import matplotlib as mpl
 import seaborn as sns
 
-BASE = 6            # 기본 글씨(제목·축라벨·범례·주석)
-TICK = 5            # 축에 있는 눈금 글씨
-PANEL_LETTER = 12   # 패널 알파벳 제목 (볼드)
+BASE = 6            # base text (titles, axis labels, legends, annotations)
+TICK = 5            # axis tick labels
+PANEL_LETTER = 12   # panel letter titles (bold)
 
 
 def apply():
     mpl.rcParams["pdf.fonttype"] = 42       # editable text in Illustrator
     mpl.rcParams["ps.fonttype"] = 42
-    # --- 모든 글씨/선 검은색 (사용자 원본 세팅) ---
+    # --- all text/lines black (original user settings) ---
     for k in ["text.color", "axes.edgecolor", "axes.labelcolor",
               "axes.titlecolor", "xtick.color", "ytick.color", "lines.color"]:
         mpl.rcParams[k] = "black"
     mpl.rcParams["patch.edgecolor"] = "black"
-    # --- 폰트 크기 통일 ---
+    # --- uniform font sizes ---
     mpl.rcParams["font.size"] = BASE
     mpl.rcParams["axes.titlesize"] = BASE
     mpl.rcParams["axes.labelsize"] = BASE
@@ -28,7 +28,7 @@ def apply():
     mpl.rcParams["figure.titlesize"] = BASE
     mpl.rcParams["xtick.labelsize"] = TICK
     mpl.rcParams["ytick.labelsize"] = TICK
-    # --- 배경 흰색 ---
+    # --- white background ---
     mpl.rcParams["figure.facecolor"] = "white"
     mpl.rcParams["axes.facecolor"] = "white"
     mpl.rcParams["savefig.facecolor"] = "white"

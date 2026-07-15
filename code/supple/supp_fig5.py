@@ -46,7 +46,7 @@ from scipy.stats import wilcoxon, ttest_rel, mannwhitneyu
 ROOT = Path(str(MS_ROOT))
 sys.path.insert(0, str(ROOT / "code"))
 from common import io, style
-from common.naming import LEVEL2, canon_series
+from common.naming import LEVEL2
 from common import palette
 
 style.apply()
@@ -83,7 +83,7 @@ prop_rows = []          # long: subset proportion per paired sample
 subset_order = []       # (lineage_label, subset) in canonical order
 for iokey, nmkey, lab in LINEAGES:
     ad = io.load_lineage(iokey)
-    ad.obs["anno2"] = canon_series(ad.obs["anno2"]).astype(str)
+    ad.obs["anno2"] = ad.obs["anno2"].astype(str)
     ad.obs["SampleID"] = ad.obs["SampleID"].astype(str)
     canon = [s for s in LEVEL2[nmkey] if s.startswith(("T_CD8", "T_CD4", "B_", "NK", "M_"))]
     # keep only this lineage's canonical subsets (drops e.g. T_CD4_CTL from CD8 obj)
@@ -167,7 +167,7 @@ def regulon_specificity_scores(auc_mtx, labels):
 
 auc = pd.read_csv(AUC, index_col=0)
 B = io.load_lineage("B")
-B.obs["anno2"] = canon_series(B.obs["anno2"]).astype(str)
+B.obs["anno2"] = B.obs["anno2"].astype(str)
 lab = B.obs["anno2"].reindex(auc.index)
 assert lab.notna().all(), "auc barcodes missing from 26JAN B object"
 rss = regulon_specificity_scores(auc, lab)

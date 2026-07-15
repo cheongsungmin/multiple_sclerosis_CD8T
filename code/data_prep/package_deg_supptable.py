@@ -3,8 +3,8 @@
 Uses the ORIGINAL DEG tables (matches the published Fig 1e counts, e.g. CD8 = 979),
 not the 26JAN re-computation. Significant DEG = |log2FoldChange| > 0.5 & pvalue < 0.05
 (non-responder vs responder contrast as stored). One sheet per lineage + a summary.
-출력: data/supplementary_tables/SupplementaryData3_DEG_baseline.xlsx (+ summary CSV)
-번호: 원본 Supplementary Data 1(메타)·2(baseline) 다음이므로 DEG = Supplementary Data 3.
+Output: data/supplementary_tables/SupplementaryData3_DEG_baseline.xlsx (+ summary CSV)
+Numbering: follows the original Supplementary Data 1 (metadata) and 2 (baseline), so DEG = Supplementary Data 3.
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))

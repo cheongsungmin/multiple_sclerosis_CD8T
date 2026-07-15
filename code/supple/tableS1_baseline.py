@@ -1,10 +1,10 @@
-"""Supplementary Data 2 재현 소스: baseline 임상/인구학 특성 (R vs NR).
+"""Reproduction source for Supplementary Data 2: baseline clinical/demographic characteristics (R vs NR).
 
-원본 Supplementary Data 2(originals/supplementary_data/...Data2.xlsx)가 정본이고,
-이 스크립트는 그 값을 코드로 재현/검증하는 소스 CSV만 만든다(별도 figure 아님).
-pre-DMT 샘플 수준(환자당 baseline 1개). Numeric: median (range) + MWU;
-categorical: n (%) + Fisher.
-출력: data/supplementary_tables/TableS1_baseline_characteristics.csv
+The original Supplementary Data 2 (originals/supplementary_data/...Data2.xlsx) is canonical;
+this script only builds the source CSV that reproduces/validates those values in code (not a
+separate figure). At the pre-DMT sample level (one baseline per patient). Numeric: median (range)
++ MWU; categorical: n (%) + Fisher.
+Output: data/supplementary_tables/TableS1_baseline_characteristics.csv
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -72,4 +72,4 @@ print(tab.to_string(index=False))
 
 print(f"\nBaseline: {len(R)} responders vs {len(NR)} non-responders "
       "(28 patients, 41 samples; 23 pre / 18 post; 24 paired from 12).")
-print("saved: TableS1_baseline_characteristics.csv  (= Supplementary Data 2 재현 소스)")
+print("saved: TableS1_baseline_characteristics.csv  (= Supplementary Data 2 reproduction source)")

@@ -9,8 +9,8 @@ in abundance, shown in Fig 1-2, and antigen fractions here do not differ by
 outcome — reported in data/results/s9_antigen_RvsNR.csv for transparency).
 Inputs (READ-ONLY): 260129_muon_airr_CD8.h5ad (precomputed scirpy VDJdb identity
 match) + 260129_muon_gex_CD8.h5ad (anno2) + GLIPH2 patient/antigen outputs.
-Runs in scirpy env. 출력: figures/supplementary/S5_tcr_antigen.pdf, data/results/s9_*.csv
-(Supplementary Fig. 2 구성요소 — Fig2 세션에서 CD8 marker·CSF 패널과 통합 예정)
+Runs in scirpy env. Output: figures/supplementary/S5_tcr_antigen.pdf, data/results/s9_*.csv
+(component of Supplementary Fig. 2 — to be integrated with the CD8 marker and CSF panels in the Fig2 session)
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))

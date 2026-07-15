@@ -41,7 +41,7 @@ from statsmodels.stats.multitest import multipletests
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-from common import io, style, naming, palette
+from common import io, style, palette
 style.apply()
 BASE, TICK, PLET = style.BASE, style.TICK, style.PANEL_LETTER   # 6 / 5 / 12(bold)
 RNG = np.random.default_rng(0)                                  # deterministic

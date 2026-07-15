@@ -11,7 +11,7 @@ Source Data (suppfig3_RvsNR.csv) for transparency.
 Self-contained, runs in the `scanpy` env. The scirpy/muon AIRR object cannot be
 opened by anndata here (awkward/muon dep), so its obs columns are read directly
 with h5py. Inputs are READ-ONLY. Output: figures/supplementary/Supplementary_Fig3.pdf
-Naming is canonical (config/naming.yaml); colors from the original curated palette.
+Naming is canonical (from the naming module); colors from the original curated palette.
 """
 import os
 _HERE = os.path.dirname(os.path.abspath(__file__))
